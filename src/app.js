@@ -1,7 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
-//const authRoute = require("./routes/authRoutes");
+const authRoute = require("./routes/authRoutes");
 const bodyParser = require("body-parser");
+const app = express();
+
 // Connect to MongoDB
 mongoose.connect(process.env.CONNECTION_STRING, {
   useNewUrlParser: true,
@@ -16,15 +18,10 @@ mongoose.connection.on("error", () => {
   console.log("*LOG: Fail to connect to MongoDB!");
 });
 
-const app = express();
-
 // Body Parser
 app.use(bodyParser.json());
 
 // User Routers
-//app.use(authRoute);
-
-// GET Method: get all
-app.get("/", (req, res, next) => {});
+app.use(authRoute);
 
 module.exports = app;
