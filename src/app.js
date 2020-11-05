@@ -3,11 +3,13 @@ const mongoose = require("mongoose");
 const authRoute = require("./routes/authRoutes");
 const bodyParser = require("body-parser");
 const app = express();
+require("./models/User");
 
 // Connect to MongoDB
 mongoose.connect(process.env.CONNECTION_STRING, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useCreateIndex: true,
 });
 
 // Test connection status
