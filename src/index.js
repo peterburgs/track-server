@@ -1,9 +1,12 @@
+require("./models/User");
+require("./models/Track");
 const express = require("express");
 const mongoose = require("mongoose");
-const authRoute = require("./routes/authRoutes");
+const authRoutes = require("./routes/authRoutes");
+const trackRoutes = require("./routes/trackRoutes");
 const bodyParser = require("body-parser");
+const requireAuth = require("./middlewares/requireAuth");
 const app = express();
-require("./models/User");
 
 // Connect to MongoDB
 mongoose.connect(process.env.CONNECTION_STRING, {
@@ -24,6 +27,12 @@ mongoose.connection.on("error", () => {
 app.use(bodyParser.json());
 
 // User Routers
-app.use(authRoute);
-
+app.use(authRoutes);
+app.use(trackRoutes);
+// GET
+app.get("/", requireAuth, (req, res) => {
+  res.status(200).json({
+    message: `Welcome ${req.user.email}`,
+  });
+});
 module.exports = app;
