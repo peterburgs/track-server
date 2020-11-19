@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
   const { authorization } = req.headers;
   if (!authorization) {
     return res.status(401).json({
-      message: "Authorization required",
+      message: "You are not logged in! Authorization required!",
     });
   }
   const rawToken = authorization.split(" ");
